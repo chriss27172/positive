@@ -1,0 +1,117 @@
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+
+export default function Frame() {
+  // Pobranie parametru użytkownika z URL (lub domyślnie ustawiamy "friend")
+  const searchParams = useSearchParams();
+  const userName = searchParams.get("fcUserName") || "friend";
+
+  // Afirmacje, które będziemy wyświetlać
+  const affirmations = [
+    `Hello @${userName}, you're amazing! 🌟`,
+    `Hey @${userName}, you're unstoppable! 💪`,
+    `@${userName}, your kindness changes the world! 🌍`,
+    `You're doing great, @${userName}! Keep it up! 🌈`,
+    `@${userName}, never forget how amazing you are! 💖`,
+    `@${userName}, the world is better with you in it! 💙`,
+    `You're a superstar, @${userName}! Keep shining! ✨`,
+    `@${userName}, your positivity is inspiring! 😊`,
+    `Keep believing in yourself, @${userName}! 🌟`,
+    `@${userName}, you bring light to everyone around you! 💡`,
+    `You are strong, @${userName}, even when you don’t feel like it! 💪`,
+    `@${userName}, you are deserving of all the good things in life! 🌷`,
+    `Never give up, @${userName}, you are capable of incredible things! 🚀`,
+    `The world is better because you are here, @${userName}! 🌍`,
+    `@${userName}, you're a beacon of hope and positivity! ✨`,
+    `You are enough, @${userName}, just as you are! 💖`,
+    `@${userName}, keep going, you're closer than you think to success! 🏆`,
+    `@${userName}, your potential is limitless! 🌟`,
+    `@${userName}, you have the strength to overcome anything! 💪`,
+    `The universe is supporting you, @${userName}! 🌠`,
+    `@${userName}, your heart is pure and beautiful! 💖`,
+    `You make the world a better place, @${userName}! 🌍`,
+    `@${userName}, your smile brightens the room! 😊`,
+    `You are brave, @${userName}, and you can handle anything life throws at you! 🦸‍♂️`,
+    `@${userName}, you are worthy of love and respect! 💝`,
+    `Believe in your dreams, @${userName}, they are worth chasing! 🌠`,
+    `@${userName}, today is the perfect day to take a step toward your goals! 🌞`,
+    `You have so much to offer, @${userName}, don’t ever forget that! 💡`,
+    `@${userName}, your positivity lifts others up! 💖`,
+    `You are resilient, @${userName}, and nothing can break you! 💪`,
+    `@${userName}, every small step you take brings you closer to your dreams! 🏃‍♀️`,
+    `You are worthy of success, @${userName}, and it’s coming your way! 💫`,
+    `@${userName}, you are capable of achieving anything you set your mind to! 🚀`,
+    `Your hard work will pay off, @${userName}, keep going! 💼`,
+    `@${userName}, the world needs your light and energy! 🌟`,
+    `You have a unique and beautiful soul, @${userName}! 🌸`,
+    `@${userName}, trust yourself — you have everything you need to succeed! 🔥`,
+    `Your efforts matter, @${userName}, and they will lead to great things! 🏆`,
+    `@${userName}, your kindness has a ripple effect that changes the world! 🌊`,
+    `You are a force to be reckoned with, @${userName}! 💥`,
+    `@${userName}, keep being yourself — you are perfect just as you are! 🌼`,
+    `Your journey is unfolding beautifully, @${userName}! 🌿`,
+    `@${userName}, you are not alone — support and love are all around you! 🤗`,
+    `You are a work of art, @${userName}, never forget how special you are! 🎨`,
+    `@${userName}, take a deep breath — you’ve got this! 🌬️`,
+    `You are worthy of all the good things coming your way, @${userName}! 🌟`,
+    `@${userName}, don’t be afraid to shine — the world needs your light! ✨`,
+    `Every day is a fresh start, @${userName}, make the most of it! 🌞`,
+    `@${userName}, you are an incredible human being, inside and out! 💖`,
+    `Believe in yourself, @${userName}, you are capable of anything! 🚀`,
+    `@${userName}, you are the architect of your own success! 🏗️`,
+    `Keep going, @${userName}, you are closer to your dreams than you think! 💭`,
+    `@${userName}, your heart is full of love and light! 🌟`,
+    `You are a beautiful soul, @${userName}, never forget your worth! 💎`,
+    `@${userName}, take pride in how far you’ve come — you’re doing amazing! 🌠`,
+    `@${userName}, your strength and resilience inspire others every day! 💪`,
+    `You are powerful, @${userName}, and you have what it takes! ⚡`,
+    `@${userName}, the world is yours — embrace the opportunities ahead! 🌍`,
+    `You are unique, @${userName}, and that’s what makes you extraordinary! 🌸`,
+    `@${userName}, keep spreading your positivity — the world needs more of it! 🌟`,
+    `You are worthy of all the good things that come your way, @${userName}! 🌈`,
+  ];
+
+  // Stan do przechowywania wiadomości i statusu interakcji
+  const [message, setMessage] = useState(`Hello @${userName}, welcome to your positive frame! 👋`);
+  const [showButton, setShowButton] = useState(true); // Flaga do wyświetlania przycisku
+
+  // Funkcja do losowania afirmacji po kliknięciu
+  const handleClick = () => {
+    const randomMessage = affirmations[Math.floor(Math.random() * affirmations.length)];
+    setMessage(randomMessage);
+    setShowButton(false);  // Ukryj przycisk po kliknięciu
+  };
+
+  useEffect(() => {
+    // Możemy dodać tu jakąś animację powitania, jeśli chcesz
+    const timeout = setTimeout(() => {
+      setMessage(`Hello @${userName}, welcome to your positive frame! 👋`);
+    }, 2000); // Późniejsze powitanie po załadowaniu
+
+    return () => clearTimeout(timeout); // Cleanup timeout po zakończeniu
+  }, [userName]);
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-green-500 p-4 text-center text-white">
+      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md">
+        {/* Początkowa wiadomość */}
+        <p className="text-lg font-semibold mb-4">{message}</p>
+        
+        {/* Przycisk do uzyskania afirmacji */}
+        {showButton && (
+          <button
+            onClick={handleClick}
+            className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-400 transition"
+          >
+            Get your affirmation 💌
+          </button>
+        )}
+
+        <p className="text-sm mt-4 opacity-70">Thank you for using this Frame! 💙</p>
+        
+        {/* Informacja o twórcy */}
+        <p className="text-xs mt-2 text-gray-500">Created by music-guy.eth 🎶</p>
+      </div>
+    </div>
+  );
+}
